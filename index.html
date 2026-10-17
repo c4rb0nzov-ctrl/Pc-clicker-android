@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131a">
+<title>PC Clicker — Garagem de Hardware</title>
+<style>
+:root{--bg:#0b0d12;--panel:#141922;--panel2:#191f2b;--line:#2b3444;--text:#edf3ff;--muted:#9ca9bc;--green:#a6ff6b;--blue:#71c7ff;--red:#ff737c;--gold:#ffd36a;--radius:16px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 500px at 85% -15%,#233b59 0,transparent 60%),radial-gradient(700px 450px at -5% 20%,#1b3025 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.wrap{max-width:1300px;margin:auto;padding:22px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}.brandmark{display:flex;align-items:center;gap:13px}.logo{width:50px;height:50px;border-radius:14px;background:linear-gradient(145deg,#a6ff6b,#4ea8ff);display:grid;place-items:center;color:#071018;font-size:25px;font-weight:1000;box-shadow:0 8px 32px #71c7ff20}.eyebrow{color:var(--green);font-size:11px;letter-spacing:.19em;font-weight:900;text-transform:uppercase}.topbar h1{font-size:clamp(23px,3vw,34px);line-height:1.1;margin:2px 0 0;letter-spacing:-.04em}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#222a38;color:var(--text);border-radius:10px;padding:9px 13px;font-weight:750;transition:.15s}.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.btn.primary{background:var(--green);color:#10160b;border-color:transparent}.btn.danger{color:#ffdce0;border-color:#703943;background:#331e25}.muted{color:var(--muted)}.tiny{font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.stat{padding:16px 17px;background:#141922e8;border:1px solid var(--line);border-radius:14px;min-width:0}.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;font-weight:850}.stat-value{font-size:clamp(20px,2.8vw,30px);font-weight:950;letter-spacing:-.04em;margin-top:5px;overflow-wrap:anywhere}.stat-value.green{color:var(--green)}.stat-sub{font-size:12px;color:var(--muted);margin-top:2px}.nav{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:18px}.nav button{border:1px solid transparent;background:transparent;color:var(--muted);border-radius:10px;padding:10px 15px;font-weight:850}.nav button.active{background:#202938;border-color:#344256;color:var(--text)}.page{display:none}.page.active{display:block}.grid-main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:16px;align-items:start}.panel{background:linear-gradient(155deg,#171d28,#11151d);border:1px solid var(--line);border-radius:var(--radius);padding:18px;min-width:0}.panel h2,.panel h3{margin:0 0 12px;letter-spacing:-.025em}.panel h2{font-size:21px}.panel h3{font-size:16px}.click-panel{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:radial-gradient(450px 240px at 50% 0%,#213c2c 0,transparent 75%),linear-gradient(150deg,#171d28,#10141b)}.click-panel:before{content:"";position:absolute;inset:12px;border:1px dashed #344252;border-radius:12px;pointer-events:none}.click-machine{font-size:56px;filter:drop-shadow(0 7px 15px #8fff4c25);margin-bottom:3px}.click-panel h2{font-size:clamp(24px,4vw,34px);margin:1px 0 4px}.click-panel p{margin:0 0 18px;color:var(--muted)}.click-btn{width:min(390px,100%);border:0;border-radius:15px;padding:18px;background:linear-gradient(100deg,#b3ff7b,#74e8a3);color:#0e170d;font-weight:1000;font-size:20px;letter-spacing:.03em;box-shadow:0 12px 32px #8dff7020;position:relative;z-index:1}.click-btn:active{transform:scale(.985)}.click-btn small{display:block;font-size:12px;font-weight:800;opacity:.7;margin-top:3px}.mini-metrics{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--muted)}.mini-metrics strong{color:var(--text)}.status-line{margin-top:15px;border:1px solid var(--line);background:#0e1218;border-radius:11px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:4px 9px;font-size:11px;font-weight:900;white-space:nowrap;background:#262e3b;color:#d7e0ee}.pill.good{background:#173422;color:#b8ffc7}.pill.warn{background:#3c2e18;color:#ffdfa0}.pill.bad{background:#3c2028;color:#ffadb4}.build-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.slot{border:1px solid #2a3443;background:#10151d;border-radius:12px;padding:11px;min-width:0}.slot-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px}.slot-name{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:900}.slot-model{font-weight:850;line-height:1.25;overflow-wrap:anywhere}.slot-brand{font-size:12px;color:var(--blue);margin-top:3px}.slot-detail{font-size:11px;color:var(--muted);margin-top:5px}.slot select{margin-top:8px;width:100%;min-width:0;background:#202836;color:var(--text);border:1px solid #3a4658;border-radius:8px;padding:7px;font-size:12px}.notice{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.5}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:13px}.section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px}.section-title h2{margin:0}.section-title p{margin:4px 0 0;color:var(--muted);font-size:13px}.shop-controls{display:grid;grid-template-columns:minmax(160px,220px) minmax(160px,1fr) auto;gap:9px;margin-bottom:14px}.field{width:100%;border:1px solid #354053;background:#10151d;color:var(--text);border-radius:10px;padding:10px 12px;min-width:0}.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.product{border:1px solid #2a3443;border-radius:13px;background:linear-gradient(150deg,#191f2a,#11151d);padding:13px;min-width:0;display:flex;flex-direction:column}.product-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.product-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:900}.product-price{color:var(--green);font-weight:950;font-size:15px;white-space:nowrap}.product h3{font-size:15px;line-height:1.25;margin:8px 0 3px;overflow-wrap:anywhere}.product-brand{color:var(--blue);font-size:12px;font-weight:800}.product-specs{font-size:11px;color:var(--muted);margin:10px 0 12px;line-height:1.55;flex:1}.product-actions{display:flex;gap:7px}.product-actions .btn{flex:1;padding:8px 7px;font-size:12px}.empty{border:1px dashed #3c485b;border-radius:12px;padding:26px;text-align:center;color:var(--muted)}.inventory-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.inventory-card{border:1px solid var(--line);background:#121720;border-radius:12px;padding:13px;min-width:0}.inventory-card h3{font-size:14px;margin:6px 0 3px;overflow-wrap:anywhere}.inventory-card .product-actions{margin-top:12px}.progress-outer{height:8px;border-radius:99px;background:#283142;overflow:hidden;margin:8px 0}.progress-inner{height:100%;background:linear-gradient(90deg,#72c9ff,#a6ff6b);width:0%;transition:width .2s}.split{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted)}.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.guide-card{border:1px solid var(--line);background:#121720;border-radius:13px;padding:16px}.guide-card strong{display:block;font-size:15px;margin-bottom:5px}.footer{color:#657286;text-align:center;font-size:11px;margin:22px 0 4px}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:20;background:#f1f6ff;color:#121722;border-radius:12px;padding:12px 16px;font-weight:850;box-shadow:0 9px 35px #0008;transition:.2s;max-width:calc(100vw - 30px)}.toast.show{opacity:1;transform:translate(-50%,0)}.saved{font-size:11px;color:var(--muted)}.no-results{padding:35px;text-align:center;color:var(--muted)}
+@media(max-width:950px){.product-grid,.inventory-list{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-main{grid-template-columns:1fr}.shop-controls{grid-template-columns:1fr 1fr}.shop-controls .sort-btn{grid-column:span 2}.topbar{align-items:flex-start}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding:13px}.topbar{flex-direction:column}.top-actions{width:100%}.top-actions button{flex:1}.stats{gap:8px}.stat{padding:12px}.stat-value{font-size:22px}.nav{display:grid;grid-template-columns:repeat(2,1fr)}.nav button{padding:10px 7px}.panel{padding:13px}.build-slots,.two-col,.guide-grid{grid-template-columns:1fr}.product-grid,.inventory-list{grid-template-columns:1fr}.shop-controls{grid-template-columns:1fr}.shop-controls .sort-btn{grid-column:auto}.click-panel{padding:20px 14px}.click-machine{font-size:48px}.status-line{align-items:flex-start;flex-direction:column}.section-title{align-items:flex-start;flex-direction:column}}
+
+/* Atualização visual 2.0 */
+.stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.stat{padding:12px 15px}.stat-label{letter-spacing:.07em}.stat-value{font-size:clamp(19px,2.5vw,27px)}
+.status-line{flex-wrap:wrap}.pc-visualizer{margin:12px 0 16px;padding:8px 10px;border:1px solid #28384a;border-radius:13px;background:radial-gradient(ellipse at 20% 55%,#17312a 0,transparent 58%),linear-gradient(145deg,#0b1118,#111824);overflow:hidden}
+.pc-visualizer svg{display:block;width:100%;height:auto;max-height:320px}
+.pc-part{transition:opacity .2s ease,filter .2s ease}.pc-case-fan{transform-box:fill-box;transform-origin:center;animation:pcSpin 5s linear infinite}.pc-spin-slow{animation-duration:8s}.pc-off{opacity:.22;filter:saturate(.25)}
+@keyframes pcSpin{to{transform:rotate(360deg)}}
+.viz-title{font-size:13px;font-weight:900;fill:#eff6ff}.viz-label{font-size:10.5px;fill:#92a6bd}.viz-value{font-size:11.5px;font-weight:800;fill:#dbe8fa}.viz-mini{font-size:9px;fill:#7d91a7;letter-spacing:.06em}
+.nav{gap:5px}.nav button{padding:9px 12px}.panel{padding:15px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats .stat:last-of-type{grid-column:1/-1}.pc-visualizer{padding:5px}.pc-visualizer svg{max-height:none}.panel{padding:12px}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brandmark"><div class="logo">PC</div><div><div class="eyebrow">Oficina de upgrades • jogo offline</div><h1>PC CLICKER <span style="color:var(--green)">/</span> Garagem de Hardware</h1></div></div>
+    <div class="top-actions"><button class="btn" id="saveBtn">Salvar agora</button><button class="btn danger" id="resetBtn">Recomeçar</button></div>
+  </header>
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Créditos</div><div class="stat-value green" id="cash">0 CR</div><div class="stat-sub" id="lifetime">0 CR gerados no total</div></div>
+    <div class="stat"><div class="stat-label">Renda por segundo</div><div class="stat-value" id="income">0 CR/s</div><div class="stat-sub">Só com o PC funcionando</div></div>
+    <div class="stat"><div class="stat-label">Valor do clique</div><div class="stat-value" id="clickValue">1 CR</div><div class="stat-sub" id="clickCount">0 cliques manuais</div></div>
+    <span id="score" class="sr-only">0</span>
+  </div>
+  <nav class="nav" aria-label="Navegação do jogo">
+    <button class="active" data-tab="garage">🖥️ Minha oficina</button>
+    <button data-tab="shop">🛒 Loja de peças</button>
+    <button data-tab="inventory">📦 Inventário</button>
+    <button data-tab="guide">📘 Como jogar</button>
+  </nav>
+
+  <main>
+    <section id="page-garage" class="page active">
+      <div class="grid-main">
+        <div>
+          <div class="panel click-panel">
+            <div class="click-machine">🖱️</div><div class="eyebrow">Renda por interação</div><h2>Clique para faturar</h2><p>Ganhe créditos e monte um PC cada vez melhor.</p>
+            <button class="click-btn" id="clickBtn">CLICAR E GANHAR <small id="clickBtnSub">+1 CR por clique</small></button>
+            <div class="mini-metrics"><span>Cliques manuais: <strong id="manualMini">0</strong></span><span>Autoclicks: <strong id="autoMini">0</strong></span><span>Tempo de jogo: <strong id="playtime">0m</strong></span></div>
+          </div>
+          <div class="panel" style="margin-top:14px">
+            <div class="section-title"><div><h2>Status do computador</h2><p>Compatibilidade, energia e desempenho em tempo real.</p></div><span class="pill" id="pcStatus">Verificando</span></div>
+            <div class="status-line"><span id="statusText">Analisando componentes...</span><span class="pill" id="gpuStatus">GPU: não instalada</span><span class="pill" id="powerStat">Consumo: 0 W</span></div>
+            <div style="margin-top:15px"><div class="split"><span>Orçamento de energia da fonte</span><strong id="wattLabel">0 / 100 W</strong></div><div class="progress-outer"><div class="progress-inner" id="wattBar"></div></div></div>
+            <div class="notice" id="autoclickNote">Instale uma placa de vídeo que consiga receber energia para ativar o autoclick automático com intervalo de 5 segundos.</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="section-title"><div><h2>Seu PC atual</h2><p>Visualização 2D das peças instaladas.</p></div><span class="pill">11 slots</span></div>
+          <div class="pc-visualizer">
+            <svg id="pcSvg" viewBox="0 0 760 325" role="img" aria-label="Esquema 2D do computador e suas peças">
+              <defs>
+                <linearGradient id="caseShade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#273446"/><stop offset="1" stop-color="#0b1017"/></linearGradient>
+                <linearGradient id="boardShade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#235a48"/><stop offset="1" stop-color="#102c28"/></linearGradient>
+                <linearGradient id="gpuShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#546477"/><stop offset="1" stop-color="#202a37"/></linearGradient>
+                <radialGradient id="fanShade"><stop offset="0" stop-color="#a6ff6b" stop-opacity=".22"/><stop offset=".6" stop-color="#3c8a76" stop-opacity=".12"/><stop offset="1" stop-color="#0b1118" stop-opacity="0"/></radialGradient>
+              </defs>
+              <!-- Tower shell / side window -->
+              <rect x="18" y="13" width="337" height="294" rx="15" fill="url(#caseShade)" stroke="#45556b" stroke-width="2"/>
+              <rect x="30" y="25" width="270" height="270" rx="8" fill="#111b25" stroke="#314354"/>
+              <path d="M37 32 H291 V287 H37 Z" fill="#101a22" stroke="#253747"/>
+              <rect x="307" y="25" width="36" height="270" rx="5" fill="#18212c" stroke="#3b4a5d"/>
+              <circle cx="326" cy="51" r="4" fill="#526174"/><circle cx="326" cy="268" r="4" fill="#526174"/>
+              <circle id="pcPowerLed" cx="325" cy="286" r="3.5" fill="#a6ff6b"/>
+              <!-- motherboard -->
+              <g id="vizBoard" class="pc-part">
+                <path d="M47 48 H285 V273 H47 Z" fill="url(#boardShade)" stroke="#3d856b" stroke-width="1.2"/>
+                <path d="M55 56 H274 M55 65 H95 V95 M261 65 V103 H274 M58 209 H94 V250 H122 M200 59 V83 M213 250 H263 V229" stroke="#78bea0" stroke-opacity=".34" fill="none" stroke-width="2"/>
+                <rect x="65" y="76" width="55" height="72" rx="4" fill="#142e2a" stroke="#508c74"/>
+                <rect x="75" y="85" width="35" height="54" rx="2" fill="#253f3a" stroke="#5d9b81"/>
+                <path d="M83 94 H102 M83 101 H102 M83 108 H102 M83 115 H102 M83 122 H102" stroke="#8bbda4" stroke-width="1.5"/>
+                <rect x="69" y="166" width="43" height="27" rx="3" fill="#192a2d" stroke="#477d6e"/>
+                <text x="90" y="183" text-anchor="middle" fill="#a5d8b7" font-size="8" font-weight="900">I/O</text>
+                <rect x="225" y="188" width="42" height="60" rx="3" fill="#142a2a" stroke="#477d6e"/>
+                <path d="M232 197 H260 M232 205 H260 M232 213 H260 M232 221 H260 M232 229 H260 M232 237 H260" stroke="#72b89a" stroke-width="1.5"/>
+              </g>
+              <!-- CPU socket / cooler -->
+              <g id="vizCpu" class="pc-part">
+                <rect x="132" y="59" width="83" height="83" rx="6" fill="#1b242d" stroke="#97aabd" stroke-width="2"/>
+                <rect x="140" y="67" width="67" height="67" rx="4" fill="#788a9b" stroke="#d0d9e4"/>
+                <rect x="147" y="74" width="53" height="53" rx="3" fill="#263440" stroke="#9fb0c0"/>
+                <circle cx="173.5" cy="100.5" r="22" fill="url(#fanShade)" stroke="#9caebd" stroke-width="1.5"/>
+                <g class="pc-case-fan pc-spin-slow" fill="#6b7f91" opacity=".9">
+                  <path d="M173 82 Q190 85 184 98 Q177 103 173 100 Z"/><path d="M192 101 Q189 118 176 112 Q171 105 174 101 Z"/><path d="M174 120 Q157 117 163 104 Q170 99 174 102 Z"/><path d="M155 100 Q158 83 171 89 Q176 96 173 100 Z"/>
+                </g>
+                <circle cx="173.5" cy="100.5" r="5" fill="#a6ff6b" stroke="#e4ffce"/>
+                <text x="173" y="153" class="viz-mini" text-anchor="middle">CPU</text>
+              </g>
+              <!-- RAM sticks -->
+              <g id="vizRam" class="pc-part">
+                <rect x="228" y="59" width="14" height="92" rx="2" fill="#6a5530" stroke="#e0bf67"/>
+                <rect x="247" y="59" width="14" height="92" rx="2" fill="#6a5530" stroke="#e0bf67"/>
+                <rect x="266" y="59" width="14" height="92" rx="2" fill="#6a5530" stroke="#e0bf67"/>
+                <path d="M231 69 H239 M231 77 H239 M231 85 H239 M231 93 H239 M231 101 H239 M231 109 H239 M250 69 H258 M250 77 H258 M250 85 H258 M250 93 H258 M250 101 H258 M250 109 H258 M269 69 H277 M269 77 H277 M269 85 H277 M269 93 H277 M269 101 H277 M269 109 H277" stroke="#f3d981" stroke-width="2"/>
+                <path d="M230 151 V157 H239 V151 M249 151 V157 H258 V151 M268 151 V157 H277 V151" fill="none" stroke="#e0bf67" stroke-width="2"/>
+              </g>
+              <!-- graphics card, shown dim when absent or unpowered -->
+              <g id="vizGpu" class="pc-part">
+                <rect x="66" y="205" width="215" height="48" rx="6" fill="url(#gpuShade)" stroke="#b1c2d3" stroke-width="1.5"/>
+                <rect x="77" y="213" width="194" height="31" rx="4" fill="#101722" stroke="#66778a"/>
+                <circle cx="121" cy="228.5" r="13" fill="#253848" stroke="#91a6b9"/><circle cx="121" cy="228.5" r="4" fill="#9ec4d7"/>
+                <circle cx="166" cy="228.5" r="13" fill="#253848" stroke="#91a6b9"/><circle cx="166" cy="228.5" r="4" fill="#9ec4d7"/>
+                <path d="M202 218 H258 M202 224 H251 M202 230 H258 M202 236 H246" stroke="#748ba1" stroke-width="2"/>
+                <rect x="94" y="253" width="24" height="5" fill="#d0a95b"/><rect x="126" y="253" width="24" height="5" fill="#d0a95b"/>
+                <text x="174" y="201" class="viz-mini" text-anchor="middle">PCIe x16</text>
+              </g>
+              <!-- storage and PSU -->
+              <g id="vizStorage" class="pc-part">
+                <rect x="55" y="262" width="79" height="23" rx="3" fill="#252d37" stroke="#8492a4"/>
+                <circle cx="67" cy="273.5" r="4" fill="none" stroke="#8492a4"/>
+                <text x="97" y="277" text-anchor="middle" fill="#dce7f2" font-size="8" font-weight="800">STORAGE</text>
+              </g>
+              <g id="vizPsu" class="pc-part">
+                <rect x="146" y="262" width="79" height="23" rx="3" fill="#222a35" stroke="#75869a"/>
+                <circle cx="158" cy="273.5" r="7" fill="none" stroke="#71879a"/><path d="M153 273 H163 M158 268 V278" stroke="#71879a"/>
+                <text x="192" y="277" text-anchor="middle" fill="#dce7f2" font-size="8" font-weight="800">PSU</text>
+              </g>
+              <!-- front airflow fans -->
+              <g id="vizFans" class="pc-part">
+                <circle cx="325" cy="100" r="13" fill="#0c131c" stroke="#40566a"/><circle cx="325" cy="100" r="9" fill="none" stroke="#66849c"/><path d="M325 91 Q333 93 329 100 Q325 101 325 100 Z M334 100 Q332 108 325 104 Q324 100 325 100 Z M325 109 Q317 107 321 100 Q325 99 325 100 Z M316 100 Q318 92 325 96 Q326 100 325 100 Z" fill="#6b879b"/>
+                <circle cx="325" cy="149" r="13" fill="#0c131c" stroke="#40566a"/><circle cx="325" cy="149" r="9" fill="none" stroke="#66849c"/><path d="M325 140 Q333 142 329 149 Q325 150 325 149 Z M334 149 Q332 157 325 153 Q324 149 325 149 Z M325 158 Q317 156 321 149 Q325 148 325 149 Z M316 149 Q318 141 325 145 Q326 149 325 149 Z" fill="#6b879b"/>
+                <circle cx="325" cy="198" r="13" fill="#0c131c" stroke="#40566a"/><circle cx="325" cy="198" r="9" fill="none" stroke="#66849c"/><path d="M325 189 Q333 191 329 198 Q325 199 325 198 Z M334 198 Q332 206 325 202 Q324 198 325 198 Z M325 207 Q317 205 321 198 Q325 197 325 198 Z M316 198 Q318 190 325 194 Q326 198 325 198 Z" fill="#6b879b"/>
+              </g>
+              <!-- labels -->
+              <text x="382" y="34" class="viz-title">VISÃO INTERNA • 2D</text>
+              <text id="vizState" x="382" y="54" class="viz-value" fill="#a6ff6b">● LIGADO</text>
+              <path d="M382 65 H744" stroke="#2c3949"/>
+              <text x="382" y="87" class="viz-label">PROCESSADOR</text><text id="vizCpuLabel" x="382" y="103" class="viz-value">Pentium II 350 MHz</text>
+              <text x="382" y="128" class="viz-label">PLACA DE VÍDEO</text><text id="vizGpuLabel" x="382" y="144" class="viz-value">Não instalada</text>
+              <text x="382" y="169" class="viz-label">MEMÓRIA</text><text id="vizRamLabel" x="382" y="185" class="viz-value">4 GB DDR1</text>
+              <text x="382" y="210" class="viz-label">PLACA-MÃE</text><text id="vizBoardLabel" x="382" y="226" class="viz-value">GA-6BXC (Slot 1)</text>
+              <text x="382" y="251" class="viz-label">FONTE / ENERGIA</text><text id="vizPsuLabel" x="382" y="267" class="viz-value">100 W</text>
+              <text x="382" y="292" class="viz-label">ARMAZENAMENTO</text><text id="vizStorageLabel" x="382" y="308" class="viz-value">IDE HDD 40 GB</text>
+            </svg>
+          </div>
+          <div class="build-slots" id="buildSlots"></div>
+          <div class="notice">Dica: compre peças na loja e equipe-as aqui. Peças incompatíveis podem impedir o PC de iniciar; uma GPU sem energia não dará bônus nem autoclick.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-shop" class="page">
+      <div class="section-title"><div><h2>Loja de hardware</h2><p>Catálogo amplo de processadores, GPUs, placas-mãe, memória, armazenamento e periféricos. Marcas adaptadas para este jogo; os modelos conhecidos foram mantidos.</p></div><span class="pill" id="catalogCount">0 peças</span></div>
+      <div class="shop-controls">
+        <select id="shopCategory" class="field" aria-label="Categoria"><option value="all">Todas as categorias</option></select>
+        <input id="shopSearch" class="field" type="search" placeholder="Buscar marca ou modelo..." aria-label="Buscar peça">
+        <button id="sortBtn" class="btn sort-btn">Ordenar: menor preço</button>
+      </div>
+      <div id="shopList" class="product-grid"></div>
+    </section>
+
+    <section id="page-inventory" class="page">
+      <div class="section-title"><div><h2>Inventário de peças</h2><p>Gerencie tudo o que você comprou. O equipamento montado não pode ser vendido até ser trocado.</p></div><span class="pill" id="ownedCount">0 unidades</span></div>
+      <div id="inventoryList" class="inventory-list"></div>
+    </section>
+
+    <section id="page-guide" class="page">
+      <div class="section-title"><div><h2>Como jogar</h2><p>Monte um PC eficiente, administre a energia e reinvista o lucro.</p></div></div>
+      <div class="guide-grid">
+        <div class="guide-card"><strong>1. Clique para ganhar</strong><div class="muted">O botão principal entrega créditos por clique. O valor cresce aos poucos conforme o desempenho do computador.</div></div>
+        <div class="guide-card"><strong>2. Compre e equipe</strong><div class="muted">Na loja, compre peças. Depois equipe-as em “Minha oficina”. O catálogo inclui famílias conhecidas de CPUs, GPUs, RAM, SSDs, HDs e outros componentes.</div></div>
+        <div class="guide-card"><strong>3. Cuide da compatibilidade</strong><div class="muted">O processador precisa combinar com o socket da placa-mãe; o tipo de RAM também precisa ser compatível. Se o PC não iniciar, corrija essas peças.</div></div>
+        <div class="guide-card"><strong>4. Confira a fonte</strong><div class="muted">Uma fonte fraca pode deixar o PC sem energia ou impedir que a placa de vídeo funcione. Melhore a fonte antes de instalar GPUs potentes.</div></div>
+        <div class="guide-card"><strong>5. Autoclick da GPU</strong><div class="muted">Quando uma GPU instalada estiver ativa e recebendo energia, o jogo faz um clique automático a cada 5 segundos. GPUs sem energia não ativam essa função.</div></div>
+        <div class="guide-card"><strong>6. PC quebrou? Ajuda de emergência</strong><div class="muted">Quando o PC passar de funcionando para desligado, você recebe 1.000 CR uma vez para consertar. Enquanto estiver desligado, a renda e os cliques ficam bloqueados. Conserte-o para voltar a ganhar.</div></div>
+        <div class="guide-card"><strong>7. Salvar e continuar</strong><div class="muted">O progresso é salvo automaticamente neste navegador. “Salvar agora” força um salvamento. “Recomeçar” apaga o progresso local deste jogo.</div></div>
+      </div>
+      <div class="panel" style="margin-top:14px"><h3>Nota sobre o catálogo</h3><div class="muted">Este é um jogo de fã para brincar com amigos, não uma lista literalmente completa de toda peça já lançada. As empresas foram renomeadas por diversão; nomes de famílias e modelos servem para reconhecer o hardware. Preços e desempenho são valores fictícios de balanceamento do jogo, não preços de mercado.</div></div>
+    </section>
+  </main>
+  <div class="footer">PC CLICKER • jogo offline • progresso salvo neste dispositivo <span id="savedText" class="saved"></span></div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{
+'use strict';
+const products=[];const counts={};
+function add(cat,brand,model,price,score,spec={}){const n=(counts[cat]||0)+1;counts[cat]=n;const p={id:`${cat}-${n}`,cat,brand,model,price,score,...spec};products.push(p);return p.id;}
+
+// Processadores
+const starterCPU=add('cpu','Tel','Pentium II 350 MHz',18,1.1,{socket:'Slot 1',watts:18,detail:'350 MHz • arquitetura clássica'});
+add('cpu','Tel','Pentium III 1.0 GHz',45,2.5,{socket:'Socket 370',watts:25});
+add('cpu','Tel','Core 2 Duo E8400',120,5,{socket:'LGA775',watts:65});
+add('cpu','Tel','Core i3-3220',180,7.5,{socket:'LGA1155',watts:55});
+add('cpu','Tel','Core i5-4590',290,12,{socket:'LGA1150',watts:84});
+add('cpu','Tel','Core i7-4790K',520,18,{socket:'LGA1150',watts:88});
+add('cpu','Tel','Core i3-10100F',480,22,{socket:'LGA1200',watts:65});
+add('cpu','Tel','Core i5-10400F',650,30,{socket:'LGA1200',watts:65});
+add('cpu','Tel','Core i5-12400F',950,44,{socket:'LGA1700',watts:65});
+add('cpu','Tel','Core i7-12700K',1850,70,{socket:'LGA1700',watts:125});
+add('cpu','Tel','Core i5-14400F',1450,64,{socket:'LGA1700',watts:65});
+add('cpu','Tel','Core i7-14700K',2750,91,{socket:'LGA1700',watts:125});
+add('cpu','Tel','Core Ultra 5 245K',2400,94,{socket:'LGA1851',watts:125});
+add('cpu','Tel','Core Ultra 7 265K',3600,120,{socket:'LGA1851',watts:125});
+add('cpu','And','Athlon 64 3200+',65,3,{socket:'Socket 754',watts:65});
+add('cpu','And','Phenom II X4 955',180,8,{socket:'AM3',watts:125});
+add('cpu','And','FX-8350',270,11,{socket:'AM3+',watts:125});
+add('cpu','And','Ryzen 3 1200',220,13,{socket:'AM4',watts:65});
+add('cpu','And','Ryzen 5 2600',390,24,{socket:'AM4',watts:65});
+add('cpu','And','Ryzen 5 3600',570,33,{socket:'AM4',watts:65});
+add('cpu','And','Ryzen 5 5600',720,41,{socket:'AM4',watts:65});
+add('cpu','And','Ryzen 7 5800X3D',1680,66,{socket:'AM4',watts:105});
+add('cpu','And','Ryzen 5 7600',1250,56,{socket:'AM5',watts:65});
+add('cpu','And','Ryzen 7 7800X3D',2450,96,{socket:'AM5',watts:120});
+add('cpu','And','Ryzen 9 7950X',3450,125,{socket:'AM5',watts:170});
+add('cpu','And','Ryzen 7 9800X3D',3250,132,{socket:'AM5',watts:120});
+
+// Placas-mãe: socket + tipo de RAM determinam compatibilidade
+const starterBoard=add('motherboard','Terabyte','GA-6BXC (Slot 1)',0,0.8,{socket:'Slot 1',ramType:'DDR1',watts:15,form:'ATX'});
+add('motherboard','Terabyte','GA-7ZX (Socket 370)',80,1.8,{socket:'Socket 370',ramType:'DDR1',watts:18,form:'ATX'});
+add('motherboard','ECSix','H61H2-M2',150,2.5,{socket:'LGA1155',ramType:'DDR3',watts:22,form:'mATX'});
+add('motherboard','ASUX','P5G41T-M LX',170,2.8,{socket:'LGA775',ramType:'DDR3',watts:22,form:'mATX'});
+add('motherboard','Biostarix','A960D+',180,3.2,{socket:'AM3+',ramType:'DDR3',watts:25,form:'mATX'});
+add('motherboard','MST','H81M-P33',220,3.5,{socket:'LGA1150',ramType:'DDR3',watts:23,form:'mATX'});
+add('motherboard','Terabyte','B450M DS3H',360,5.5,{socket:'AM4',ramType:'DDR4',watts:28,form:'mATX'});
+add('motherboard','ASUX','PRIME B450M-A II',410,6,{socket:'AM4',ramType:'DDR4',watts:28,form:'mATX'});
+add('motherboard','ASSrock','B450M-HDV R4.0',300,4.8,{socket:'AM4',ramType:'DDR4',watts:25,form:'mATX'});
+add('motherboard','MST','B550M PRO-VDH WIFI',520,7.5,{socket:'AM4',ramType:'DDR4',watts:30,form:'mATX'});
+add('motherboard','Terabyte','B550 AORUS ELITE V2',650,8.5,{socket:'AM4',ramType:'DDR4',watts:32,form:'ATX'});
+add('motherboard','ASUX','TUF GAMING B650-PLUS WIFI',1000,11,{socket:'AM5',ramType:'DDR5',watts:35,form:'ATX'});
+add('motherboard','MST','MAG B650 TOMAHAWK WIFI',1150,12,{socket:'AM5',ramType:'DDR5',watts:36,form:'ATX'});
+add('motherboard','ASSrock','B650M-HDV/M.2',720,8.8,{socket:'AM5',ramType:'DDR5',watts:31,form:'mATX'});
+add('motherboard','Terabyte','B760M DS3H DDR4',680,9,{socket:'LGA1700',ramType:'DDR4',watts:32,form:'mATX'});
+add('motherboard','ASUX','PRIME Z790-P WIFI',1250,13,{socket:'LGA1700',ramType:'DDR5',watts:38,form:'ATX'});
+add('motherboard','MST','PRO B760M-A WIFI DDR5',850,10,{socket:'LGA1700',ramType:'DDR5',watts:34,form:'mATX'});
+add('motherboard','ROGX','ROG STRIX X870E-E GAMING WIFI',2600,17,{socket:'AM5',ramType:'DDR5',watts:42,form:'ATX'});
+add('motherboard','Terabyte','Z890 AORUS MASTER',2850,18,{socket:'LGA1851',ramType:'DDR5',watts:43,form:'ATX'});
+add('motherboard','Colorfull','CVN B760I FROZEN WIFI',780,9.5,{socket:'LGA1700',ramType:'DDR5',watts:33,form:'Mini-ITX'});
+
+// Memória RAM
+const starterRAM=add('ram','Kingfast','4 GB DDR1 ValueRAM',0,1,{gen:'DDR1',capacity:4,watts:4,detail:'Kit inicial (ficcional)'});
+add('ram','Kingfast','1 GB DDR1 ValueRAM',15,0.6,{gen:'DDR1',capacity:1,watts:3});
+add('ram','Samsong','2 GB DDR2',28,1.1,{gen:'DDR2',capacity:2,watts:4});
+add('ram','Kingfast','4 GB DDR2',42,1.6,{gen:'DDR2',capacity:4,watts:4});
+add('ram','Cruxial','8 GB DDR3',75,2.7,{gen:'DDR3',capacity:8,watts:5});
+add('ram','G-Skil','16 GB DDR3 Ripjaws X',130,4.5,{gen:'DDR3',capacity:16,watts:6});
+add('ram','Kingfast','8 GB DDR4 Fury Beast',115,4.2,{gen:'DDR4',capacity:8,watts:5});
+add('ram','Corsar','16 GB DDR4 Vengeance LPX',220,7,{gen:'DDR4',capacity:16,watts:6});
+add('ram','Tim Grup','16 GB DDR4 T-Force Vulcan Z',205,6.5,{gen:'DDR4',capacity:16,watts:6});
+add('ram','Adatax','16 GB DDR4 XPG Spectrix D41',245,7.2,{gen:'DDR4',capacity:16,watts:7});
+add('ram','Kingfast','32 GB DDR4 Fury Beast',390,10,{gen:'DDR4',capacity:32,watts:8});
+add('ram','Corsar','32 GB DDR4 Vengeance RGB Pro',460,11,{gen:'DDR4',capacity:32,watts:8});
+add('ram','Kingfast','16 GB DDR5 Fury Beast',320,8.5,{gen:'DDR5',capacity:16,watts:6});
+add('ram','Corsar','32 GB DDR5 Vengeance',620,13,{gen:'DDR5',capacity:32,watts:8});
+add('ram','G-Skil','32 GB DDR5 Trident Z5 Neo',700,14,{gen:'DDR5',capacity:32,watts:8});
+add('ram','G-Skil','48 GB DDR5 Trident Z5',950,16,{gen:'DDR5',capacity:48,watts:9});
+add('ram','Corsar','64 GB DDR5 Dominator Titanium',1450,20,{gen:'DDR5',capacity:64,watts:10});
+add('ram','Patriotix','32 GB DDR5 Viper Venom',570,12.5,{gen:'DDR5',capacity:32,watts:8});
+add('ram','Cruxial','64 GB DDR5 Pro',1180,19,{gen:'DDR5',capacity:64,watts:9});
+
+// GPUs: fabricante renomeado; nomes de famílias/modelos mantidos
+const gpu750=add('gpu','Nivida','GeForce GTX 750 Ti',70,6,{watts:55,vram:2,detail:'2 GB • baixo consumo'});
+add('gpu','Nivida','GeForce GTX 1050 Ti',150,9,{watts:75,vram:4});
+add('gpu','Nivida','GeForce GTX 1650',250,14,{watts:75,vram:4});
+add('gpu','MST','GeForce GTX 1660 SUPER VENTUS XS',390,20,{watts:125,vram:6});
+add('gpu','EVGX','GeForce RTX 2060 SC',560,30,{watts:160,vram:6});
+add('gpu','Zotax','GeForce RTX 3060 Twin Edge',820,41,{watts:170,vram:12});
+add('gpu','Terabyte','GeForce RTX 4060 WINDFORCE OC',950,46,{watts:115,vram:8});
+add('gpu','MST','GeForce RTX 4060 Ti VENTUS 2X',1250,56,{watts:160,vram:8});
+add('gpu','ASUX','TUF Gaming GeForce RTX 4070 SUPER',2200,84,{watts:220,vram:12});
+add('gpu','Nivida','GeForce RTX 4080 SUPER Founders Edition',4300,122,{watts:320,vram:16});
+add('gpu','Nivida','GeForce RTX 4090 Founders Edition',7200,165,{watts:450,vram:24});
+add('gpu','Nivida','GeForce RTX 5080 Founders Edition',6800,190,{watts:360,vram:16});
+add('gpu','Nivida','GeForce RTX 5090 Founders Edition',11900,240,{watts:575,vram:32});
+add('gpu','And','Radeon RX 550',65,4,{watts:50,vram:2});
+add('gpu','Safira','Radeon RX 570 PULSE',170,8,{watts:150,vram:4});
+add('gpu','PowerColora','Radeon RX 580 Red Dragon',250,12,{watts:185,vram:8});
+add('gpu','XFXx','Radeon RX 6600 SWFT 210',650,29,{watts:132,vram:8});
+add('gpu','Safira','Radeon RX 6700 XT PULSE',980,41,{watts:230,vram:12});
+add('gpu','PowerColora','Radeon RX 7600 Fighter',870,39,{watts:165,vram:8});
+add('gpu','XFXx','Radeon RX 7800 XT QICK 319',1650,71,{watts:263,vram:16});
+add('gpu','Safira','Radeon RX 7900 XTX NITRO+',4750,130,{watts:355,vram:24});
+add('gpu','And','Radeon RX 9070 XT',3650,116,{watts:304,vram:16});
+add('gpu','Tel','Arc A380',175,8,{watts:75,vram:6});
+add('gpu','Tel','Arc A750 Limited Edition',490,25,{watts:225,vram:8});
+add('gpu','Tel','Arc B580',780,41,{watts:190,vram:12});
+add('gpu','Palix','GeForce RTX 3060 Dual',850,40,{watts:170,vram:12});
+add('gpu','PYN','GeForce RTX 4070 SUPER VERTO',2290,83,{watts:220,vram:12});
+add('gpu','MST','GeForce RTX 5070 Ti GAMING TRIO',5200,155,{watts:300,vram:16});
+add('gpu','ROGX','ROG Astral GeForce RTX 5090',14900,250,{watts:600,vram:32});
+add('gpu','Safira','Radeon RX 7900 GRE PULSE',1990,67,{watts:260,vram:16});
+
+// SSDs e HDs
+const starterStorage=add('storage','SeaGatey','IDE HDD 40 GB 7200 RPM',0,0.5,{kind:'HDD',capacity:'40 GB',watts:7});
+add('storage','SeaGatey','Barracuda 500 GB HDD',55,1.5,{kind:'HDD',capacity:'500 GB',watts:7});
+add('storage','Westron Digital','WD Blue 1 TB HDD',90,2,{kind:'HDD',capacity:'1 TB',watts:7});
+add('storage','SeaGatey','Barracuda 2 TB HDD',140,3,{kind:'HDD',capacity:'2 TB',watts:7});
+add('storage','Westron Digital','WD Purple 4 TB HDD',320,4,{kind:'HDD',capacity:'4 TB',watts:8});
+add('storage','SeaGatey','IronWolf 8 TB HDD',780,5,{kind:'HDD',capacity:'8 TB',watts:9});
+add('storage','Cruxial','BX500 240 GB SATA SSD',100,5.5,{kind:'SSD SATA',capacity:'240 GB',watts:3});
+add('storage','Samsong','870 EVO 500 GB SATA SSD',230,8,{kind:'SSD SATA',capacity:'500 GB',watts:3});
+add('storage','Kingfast','A400 480 GB SATA SSD',170,7,{kind:'SSD SATA',capacity:'480 GB',watts:3});
+add('storage','Cruxial','MX500 1 TB SATA SSD',360,10,{kind:'SSD SATA',capacity:'1 TB',watts:3});
+add('storage','Westron Digital','WD Blue SN580 1 TB NVMe',430,15,{kind:'NVMe',capacity:'1 TB',watts:5});
+add('storage','Kingfast','NV2 1 TB NVMe',380,14,{kind:'NVMe',capacity:'1 TB',watts:5});
+add('storage','Samsong','990 PRO 1 TB NVMe',620,19,{kind:'NVMe',capacity:'1 TB',watts:6});
+add('storage','Cruxial','T500 2 TB NVMe',850,22,{kind:'NVMe',capacity:'2 TB',watts:6});
+add('storage','Westron Digital','WD Black SN850X 2 TB NVMe',980,25,{kind:'NVMe',capacity:'2 TB',watts:7});
+add('storage','Sabrenx','Rocket 4 Plus 4 TB NVMe',1790,30,{kind:'NVMe',capacity:'4 TB',watts:8});
+add('storage','Kioxiax','EXCERIA PRO 2 TB NVMe',900,23,{kind:'NVMe',capacity:'2 TB',watts:7});
+add('storage','Solidigme','P44 Pro 2 TB NVMe',1050,26,{kind:'NVMe',capacity:'2 TB',watts:7});
+
+// Fontes
+const starterPSU=add('psu','FSPower','Fonte genérica 100 W',0,0,{outputW:100,watts:0,cert:'sem certificação'});
+add('psu','FSPower','450 W Bronze',95,0,{outputW:450,watts:0,cert:'80 Plus Bronze'});
+add('psu','ThermoTake','Smart 500 W',150,0,{outputW:500,watts:0,cert:'80 Plus White'});
+add('psu','Corsar','CV550 550 W',260,0,{outputW:550,watts:0,cert:'80 Plus Bronze'});
+add('psu','XPGaming','Pylon 650 W',330,0,{outputW:650,watts:0,cert:'80 Plus Bronze'});
+add('psu','Cooler Pastor','MWE 650 Bronze V2',390,0,{outputW:650,watts:0,cert:'80 Plus Bronze'});
+add('psu','SeaSonicx','FOCUS GX-750',650,0,{outputW:750,watts:0,cert:'80 Plus Gold'});
+add('psu','Corsar','RM850x 850 W',850,0,{outputW:850,watts:0,cert:'80 Plus Gold'});
+add('psu','EVGX','SuperNOVA 1000 G7',1180,0,{outputW:1000,watts:0,cert:'80 Plus Gold'});
+add('psu','be quieto','Straight Power 12 1200 W',1750,0,{outputW:1200,watts:0,cert:'80 Plus Platinum'});
+add('psu','ThermoTake','Toughpower GF3 1350 W',2050,0,{outputW:1350,watts:0,cert:'80 Plus Gold'});
+add('psu','SilverStonez','SX1000 Platinum SFX',1900,0,{outputW:1000,watts:0,cert:'80 Plus Platinum'});
+add('psu','Super Flor','Leadex VII XG 1300 W',2300,0,{outputW:1300,watts:0,cert:'80 Plus Gold'});
+add('psu','ROGX','ROG Thor 1600 W Titanium',3900,0,{outputW:1600,watts:0,cert:'80 Plus Titanium'});
+
+// Refrigeração
+const starterCooler=add('cooler','Genérico','Cooler básico para Slot 1',0,0.5,{watts:4,compatible:'universal'});
+add('cooler','Cooler Pastor','Hyper 212 Black Edition',120,1.5,{watts:5});
+add('cooler','Deepcooler','AK400',145,2,{watts:5});
+add('cooler','Deepcooler','AK620',340,3.5,{watts:7});
+add('cooler','NocTua','NH-D15 chromax.black',580,4.5,{watts:7});
+add('cooler','Artic','Freezer 36',190,2.4,{watts:5});
+add('cooler','ThermoTake','TH360 V2 ARGB',550,4.5,{watts:15});
+add('cooler','Corsar','iCUE H100i Elite Capellix XT',780,5,{watts:15});
+add('cooler','Lian Lee','Galahad II Trinity 360',760,5.3,{watts:16});
+add('cooler','Artic','Liquid Freezer III 420',980,6.5,{watts:18});
+add('cooler','IDeecool','FROZN A620 PRO SE',230,2.8,{watts:6});
+
+// Gabinetes
+const starterCase=add('case','Genérico','Mini Tower 1998',0,0.3,{watts:4,form:'ATX'});
+add('case','Montek','X3 Mesh',190,1.1,{watts:6,form:'ATX'});
+add('case','NZXTZ','H5 Flow',480,2.5,{watts:7,form:'ATX'});
+add('case','Terabyte','C200 TG',220,1.4,{watts:6,form:'ATX'});
+add('case','Lian Lee','O11 Dynamic EVO',890,3.5,{watts:10,form:'ATX'});
+add('case','Fractal Desing','North',1050,3.8,{watts:8,form:'ATX'});
+add('case','HyteX','Y70 Touch',1650,4.8,{watts:12,form:'ATX'});
+add('case','Fantaks','Eclipse G500A',680,3,{watts:8,form:'ATX'});
+add('case','Cougarr','MX330-G',210,1.4,{watts:6,form:'ATX'});
+add('case','SilverStonez','SUGO 16',420,2, {watts:7,form:'Mini-ITX'});
+add('case','Cooler Pastor','TD500 Mesh V2',540,2.8,{watts:8,form:'ATX'});
+
+// Monitores e periféricos - melhoram levemente o valor do clique
+const starterMonitor=add('monitor','Genérico','CRT 14 polegadas',0,0,{diag:'14" CRT',bonus:0,watts:0});
+add('monitor','AOK','22B2H 21.5" Full HD',330,0,{diag:'21.5" FHD',bonus:0.03,watts:0});
+add('monitor','LGee','24GN60R-B 24" 144 Hz',620,0,{diag:'24" FHD 144 Hz',bonus:0.06,watts:0});
+add('monitor','Acerr','Nitro KG241Y 165 Hz',680,0,{diag:'23.8" FHD 165 Hz',bonus:0.07,watts:0});
+add('monitor','Delle','G2724D 27" QHD 165 Hz',1280,0,{diag:'27" QHD 165 Hz',bonus:0.1,watts:0});
+add('monitor','ASUX','TUF VG27AQ 27" QHD',1550,0,{diag:'27" QHD',bonus:0.11,watts:0});
+add('monitor','LGee','UltraGear OLED 27GS95QE',4300,0,{diag:'27" QHD OLED 240 Hz',bonus:0.15,watts:0});
+add('monitor','Samsong','Odyssey G9 49" OLED',6700,0,{diag:'49" ultrawide OLED',bonus:0.18,watts:0});
+add('monitor','AOK','AGON PRO 32" 4K',3150,0,{diag:'32" 4K',bonus:0.14,watts:0});
+
+const starterKeyboard=add('keyboard','Genérico','Teclado PS/2 básico',0,0,{bonus:0,watts:0});
+add('keyboard','Reddragonz','Kumara K552',180,0,{bonus:0.03,watts:0});
+add('keyboard','LogitecH','G213 Prodigy',260,0,{bonus:0.04,watts:0});
+add('keyboard','StealSeries','Apex 3 TKL',390,0,{bonus:0.05,watts:0});
+add('keyboard','Corsar','K70 RGB PRO',820,0,{bonus:0.07,watts:0});
+add('keyboard','Razerr','BlackWidow V4 Pro',1090,0,{bonus:0.08,watts:0});
+add('keyboard','HyperXX','Alloy Origins Core',470,0,{bonus:0.05,watts:0});
+
+const starterMouse=add('mouse','Genérico','Mouse PS/2 400 DPI',0,0,{bonus:0,watts:0});
+add('mouse','LogitecH','G203 LIGHTSYNC',130,0,{bonus:0.03,watts:0});
+add('mouse','Reddragonz','Cobra M711',100,0,{bonus:0.025,watts:0});
+add('mouse','Razerr','DeathAdder V3',650,0,{bonus:0.07,watts:0});
+add('mouse','StealSeries','Aerox 5 Wireless',780,0,{bonus:0.075,watts:0});
+add('mouse','Corsar','M75 Wireless',690,0,{bonus:0.07,watts:0});
+add('mouse','LogitecH','G PRO X Superlight 2',900,0,{bonus:0.09,watts:0});
+
+// Marcas fictícias adicionais e novas opções para ampliar a oficina.
+add('motherboard','ROGX','ROG STRIX Z890-E GAMING WIFI',3190,19,{socket:'LGA1851',ramType:'DDR5',watts:44,form:'ATX'});
+add('motherboard','AoruX','X870E MASTER',2750,17.5,{socket:'AM5',ramType:'DDR5',watts:42,form:'ATX'});
+add('motherboard','Assrocky','X870 Steel Legend WiFi',1890,15.5,{socket:'AM5',ramType:'DDR5',watts:37,form:'ATX'});
+add('motherboard','Biostark','B650M GAMING X AX',690,8.5,{socket:'AM5',ramType:'DDR5',watts:32,form:'mATX'});
+add('ram','Teamgroupp','32 GB DDR5 T-Force Delta RGB',650,13.5,{gen:'DDR5',capacity:32,watts:8});
+add('ram','Lexor','32 GB DDR5 ARES RGB',610,12.8,{gen:'DDR5',capacity:32,watts:8});
+add('ram','Mushki','32 GB DDR4 Redline',430,10.5,{gen:'DDR4',capacity:32,watts:8});
+add('gpu','Galaxia','GeForce RTX 4070 SUPER EX Gamer',2390,88,{watts:220,vram:12});
+add('gpu','Gainwurd','GeForce RTX 5070 Ti Phoenix',4890,149,{watts:300,vram:16});
+add('gpu','InnoTronic','GeForce RTX 4090 iCHILL X3',7990,190,{watts:450,vram:24});
+add('gpu','Manlix','GeForce RTX 5070 3X OC',3890,125,{watts:250,vram:12});
+add('gpu','Yestonix','Radeon RX 7900 XTX Sakura',4990,132,{watts:355,vram:24});
+add('gpu','AoruX','GeForce RTX 5080 MASTER',7890,192,{watts:360,vram:16});
+add('gpu','Palix','GeForce RTX 5080 GamingPro',7490,185,{watts:360,vram:16});
+add('gpu','Colorfull','iGame GeForce RTX 5090 Vulcan',13990,248,{watts:575,vram:32});
+add('storage','Lexor','NM790 2 TB NVMe',790,22,{kind:'NVMe',capacity:'2 TB',watts:6});
+add('storage','Fikwoot','FN970 2 TB NVMe',720,20,{kind:'NVMe',capacity:'2 TB',watts:6});
+add('storage','Adatax','LEGEND 960 MAX 2 TB NVMe',940,24,{kind:'NVMe',capacity:'2 TB',watts:7});
+add('storage','Teamgroupp','MP44 4 TB NVMe',1590,29,{kind:'NVMe',capacity:'4 TB',watts:8});
+add('psu','Antect','NeoECO 750 W Gold',590,0,{outputW:750,watts:0,cert:'80 Plus Gold'});
+add('psu','Gamemaxx','GX850 850 W Gold',720,0,{outputW:850,watts:0,cert:'80 Plus Gold'});
+add('psu','ToughGear','ATX 3.1 1000 W Platinum',1490,0,{outputW:1000,watts:0,cert:'80 Plus Platinum'});
+add('cooler','Termalright','Peerless Assassin 120 SE',260,3.1,{watts:6});
+add('cooler','IDeecool','FX360 LCD',720,5.2,{watts:16});
+add('cooler','Arctikool','Liquid Freezer III 360',790,5.8,{watts:17});
+add('case','Phantix','NV5',650,3.1,{watts:9,form:'ATX'});
+add('case','Kolinkk','Observatory HF Mesh',390,2.2,{watts:7,form:'ATX'});
+add('case','HyteX','Y70 Touch Infinite',1840,5,{watts:12,form:'ATX'});
+add('case','Montek','Sky Two GX',570,2.9,{watts:8,form:'ATX'});
+add('monitor','Viewsonix','VX2728J-2K 27 QHD 180 Hz',1190,0,{diag:'27\" QHD 180 Hz',bonus:0.1,watts:0});
+add('monitor','Philipsy','Evnia 34M2C8600 OLED',4900,0,{diag:'34\" UWQHD OLED 175 Hz',bonus:0.16,watts:0});
+add('monitor','AlienWarez','AW3423DWF QD-OLED',4590,0,{diag:'34\" QD-OLED 165 Hz',bonus:0.16,watts:0});
+add('monitor','AOK','27G2S 27\" 165 Hz',790,0,{diag:'27\" FHD 165 Hz',bonus:0.08,watts:0});
+add('keyboard','Wooteng','Two HE',1290,0,{bonus:0.09,watts:0});
+add('keyboard','Glorix','GMMK 3 Pro',950,0,{bonus:0.08,watts:0});
+add('mouse','Pulsarr','Xlite V3 Wireless',650,0,{bonus:0.075,watts:0});
+add('mouse','Lamzuu','Atlantis Mini Pro',590,0,{bonus:0.07,watts:0});
+
+const labels={cpu:'Processador',gpu:'Placa de vídeo',motherboard:'Placa-mãe',ram:'Memória RAM',storage:'Armazenamento',psu:'Fonte',cooler:'Refrigeração',case:'Gabinete',monitor:'Monitor',keyboard:'Teclado',mouse:'Mouse'};
+const categoryOrder=['cpu','gpu','motherboard','ram','storage','psu','cooler','case','monitor','keyboard','mouse'];
+const catEmojis={cpu:'🧠',gpu:'🎮',motherboard:'🧩',ram:'💾',storage:'📀',psu:'⚡',cooler:'❄️',case:'🗄️',monitor:'🖥️',keyboard:'⌨️',mouse:'🖱️'};
+const starter={cpu:starterCPU,motherboard:starterBoard,ram:starterRAM,gpu:null,storage:starterStorage,psu:starterPSU,cooler:starterCooler,case:starterCase,monitor:starterMonitor,keyboard:starterKeyboard,mouse:starterMouse};
+const saveKey='pc-clicker-garagem-save-v1';
+function freshState(){const owned={};Object.values(starter).filter(Boolean).forEach(id=>owned[id]=(owned[id]||0)+1);return {cash:25,lifetime:0,manual:0,autoclicks:0,startedAt:Date.now(),equipped:{...starter},owned,tab:'garage',lastAuto:Date.now(),lastTick:Date.now(),wasOperational:true,breakdownCount:0};}
+let state=freshState();let shopSort='price';let toastTimer=null;
+function load(){try{const raw=localStorage.getItem(saveKey);if(!raw)return;const x=JSON.parse(raw);if(!x||typeof x!=='object')return;const hadOperationalFlag=typeof x.wasOperational==='boolean';state={...freshState(),...x,equipped:{...starter,...(x.equipped||{})},owned:x.owned||freshState().owned};for(const slot of categoryOrder){const id=state.equipped[slot];if(id&&!products.some(p=>p.id===id&&p.cat===slot))state.equipped[slot]=starter[slot]??null;}for(const id of Object.keys(state.owned)){if(!products.some(p=>p.id===id))delete state.owned[id];}state.lastTick=Date.now();if(!state.lastAuto)state.lastAuto=Date.now();if(!hadOperationalFlag)state.wasOperational=getBuild().operational;}catch(e){console.warn('Save local inválido',e);}}
+function save(silent=false){try{const copy={...state,lastTick:Date.now()};localStorage.setItem(saveKey,JSON.stringify(copy));const s=document.getElementById('savedText');s.textContent=' • salvo';if(!silent)showToast('Progresso salvo neste navegador.');}catch(e){if(!silent)showToast('Não foi possível salvar; armazenamento do navegador pode estar bloqueado.');}}
+const byId=id=>products.find(p=>p.id===id)||null;
+const fmt=n=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:n<100?2:0}).format(n||0);
+const money=n=>`${fmt(n)} CR`;
+function getBuild(){const e=state.equipped;const cpu=byId(e.cpu),board=byId(e.motherboard),ram=byId(e.ram),gpu=byId(e.gpu),storage=byId(e.storage),psu=byId(e.psu),cooler=byId(e.cooler),pcase=byId(e.case);let issues=[];if(!cpu||!board||!ram||!psu)issues.push('Falta CPU, placa-mãe, RAM ou fonte.');if(cpu&&board&&cpu.socket!==board.socket)issues.push(`Socket incompatível: ${cpu.model} usa ${cpu.socket}, mas a placa-mãe usa ${board.socket}.`);if(ram&&board&&ram.gen!==board.ramType)issues.push(`RAM incompatível: a placa-mãe precisa de ${board.ramType}, mas a memória instalada é ${ram.gen}.`);const coreW=(cpu?.watts||0)+(board?.watts||0)+(ram?.watts||0)+(storage?.watts||0)+(cooler?.watts||0)+(pcase?.watts||0);if(psu&&coreW>psu.outputW)issues.push(`A fonte não consegue alimentar o conjunto básico (${Math.ceil(coreW)} W necessários).`);const bootable=issues.length===0;const gpuW=gpu?.watts||0;const gpuActive=!!(bootable&&gpu&&psu&&coreW+gpuW<=psu.outputW);const operational=!!(bootable&&(!gpu||gpuActive));const totalW=coreW+(gpu?gpuW:0);let points=0;if(operational){points=(cpu?.score||0)+(board?.score||0)*.5+(ram?.score||0)*.55+(storage?.score||0)*.45+(cooler?.score||0)*.1+(pcase?.score||0)*.06+(gpuActive?(gpu?.score||0)*1.15:0);}const passive=operational?(0.12+Math.pow(Math.max(.1,points),.75)*.07):0;const monitor=byId(e.monitor),keyboard=byId(e.keyboard),mouse=byId(e.mouse);const periphBonus=(monitor?.bonus||0)+(keyboard?.bonus||0)+(mouse?.bonus||0);const click=operational?(1+Math.log2(1+Math.max(0,points))*.65+periphBonus*5):0;return {cpu,board,ram,gpu,storage,psu,cooler,pcase,bootable,operational,gpuActive,coreW,totalW,points,passive,click,issues,periphBonus};}
+function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2300);}
+function canAfford(p){return state.cash>=p.price;}
+function currentlyEquipped(id){return categoryOrder.some(s=>state.equipped[s]===id);}
+function availableQty(id){return Math.max(0,(state.owned[id]||0)-(currentlyEquipped(id)?1:0));}
+function earn(amount){if(!Number.isFinite(amount)||amount<=0)return;state.cash+=amount;state.lifetime+=amount;}
+function updateHUD(){const b=getBuild();
+ const was=state.wasOperational;
+ if(typeof was!=='boolean'){state.wasOperational=b.operational;}
+ else if(was&&!b.operational){state.cash+=1000;state.breakdownCount=(state.breakdownCount||0)+1;state.wasOperational=false;save(true);showToast('PC parou! +1.000 CR de emergência para consertar.');}
+ else{state.wasOperational=b.operational;}
+ document.getElementById('cash').textContent=money(state.cash);document.getElementById('lifetime').textContent=`${money(state.lifetime)} gerados no total`;
+ document.getElementById('income').textContent=`${fmt(b.passive)} CR/s`;document.getElementById('clickValue').textContent=money(b.click);document.getElementById('clickCount').textContent=`${fmt(state.manual)} cliques manuais`;
+ document.getElementById('score').textContent=fmt(b.points);document.getElementById('powerStat').textContent=`Consumo: ${Math.ceil(b.totalW)} / ${b.psu?.outputW||0} W`;
+ document.getElementById('clickBtnSub').textContent=b.operational?`+${fmt(b.click)} CR por clique`:'PC desligado — conserte para ganhar';document.getElementById('clickBtn').disabled=!b.operational;
+ document.getElementById('manualMini').textContent=fmt(state.manual);document.getElementById('autoMini').textContent=fmt(state.autoclicks);
+ const seconds=Math.max(0,Math.floor((Date.now()-state.startedAt)/1000));document.getElementById('playtime').textContent=seconds<3600?`${Math.floor(seconds/60)}m ${seconds%60}s`:`${Math.floor(seconds/3600)}h ${Math.floor(seconds%3600/60)}m`;
+ const psu=b.psu;const maxW=psu?.outputW||0;document.getElementById('wattLabel').textContent=`${Math.ceil(b.totalW)} / ${maxW} W`;document.getElementById('wattBar').style.width=`${maxW?Math.min(100,b.totalW/maxW*100):100}%`;
+ const status=document.getElementById('pcStatus'),stext=document.getElementById('statusText'),gs=document.getElementById('gpuStatus');if(!b.operational){status.className='pill bad';status.textContent='PC desligado';stext.textContent=b.issues[0]||(b.gpu&&!b.gpuActive?'GPU instalada sem energia suficiente. Troque a fonte ou retire a GPU.':'Revise as peças para ligar o PC.');}else{status.className='pill good';status.textContent='PC funcionando';stext.textContent=`Ligado • ${Math.ceil(b.coreW)} W básicos • renda ativa.`;}
+ if(!b.gpu){gs.className='pill';gs.textContent='GPU: não instalada';}else if(b.gpuActive){gs.className='pill good';gs.textContent='GPU: ativa';}else{gs.className='pill bad';gs.textContent='GPU: sem energia';}
+ const note=document.getElementById('autoclickNote');if(!b.operational){note.innerHTML='<strong style="color:var(--red)">Renda pausada.</strong> Seu PC está desligado. Você recebeu 1.000 CR de emergência para corrigir as peças e voltar a jogar.';}else if(b.gpuActive){const remain=Math.max(0,5-(Date.now()-state.lastAuto)/1000);note.innerHTML=`<strong style="color:var(--green)">Autoclick ligado.</strong> Próximo clique automático em <strong>${remain.toFixed(1).replace('.',',')} s</strong>.`;}else{note.textContent='O PC funciona sem uma placa de vídeo dedicada. Instale uma GPU e uma fonte adequada para ativar o autoclick a cada 5 segundos.';}
+ renderPCVisual(b);
+}
+function shortenLabel(s,max=30){s=String(s||'Não instalado');return s.length>max?s.slice(0,max-1)+'…':s;}
+function renderPCVisual(b){
+ const set=(id,show)=>{const el=document.getElementById(id);if(el)el.setAttribute('opacity',show?'1':'.2');};
+ set('vizCpu',!!b.cpu&&b.operational);set('vizBoard',!!b.board&&b.operational);set('vizRam',!!b.ram&&b.operational);set('vizGpu',!!b.gpu&&(b.gpuActive));set('vizStorage',!!b.storage);set('vizPsu',!!b.psu);set('vizFans',!!b.pcase);
+ const led=document.getElementById('pcPowerLed');if(led)led.setAttribute('fill',b.operational?'#a6ff6b':'#ff737c');
+ const st=document.getElementById('vizState');if(st){st.textContent=b.operational?'● LIGADO':'● DESLIGADO';st.setAttribute('fill',b.operational?'#a6ff6b':'#ff737c');}
+ const val={vizCpuLabel:b.cpu?shortenLabel(b.cpu.model,29):'Não instalado',vizGpuLabel:b.gpu?shortenLabel(b.gpu.model,29)+(b.gpuActive?'':' • sem energia'):'Não instalada',vizRamLabel:b.ram?shortenLabel(`${b.ram.gen||''} ${b.ram.capacity||''} GB`,29):'Não instalada',vizBoardLabel:b.board?shortenLabel(b.board.model,29):'Não instalada',vizPsuLabel:b.psu?`${b.psu.outputW} W • ${shortenLabel(b.psu.brand,14)}`:'Não instalada',vizStorageLabel:b.storage?shortenLabel(b.storage.model,29):'Não instalada'};
+ for(const [id,text] of Object.entries(val)){const el=document.getElementById(id);if(el)el.textContent=text;}
+}
+function productDetails(p){const parts=[];if(p.socket)parts.push(p.socket);if(p.ramType)parts.push(p.ramType);if(p.gen)parts.push(`${p.gen} • ${p.capacity} GB`);if(p.outputW)parts.push(`${p.outputW} W`);if(p.watts&&p.cat!=='psu')parts.push(`${p.watts} W consumo`);if(p.vram)parts.push(`${p.vram} GB VRAM`);if(p.kind)parts.push(`${p.kind} • ${p.capacity}`);if(p.form)parts.push(p.form);if(p.diag)parts.push(p.diag);if(p.cert)parts.push(p.cert);if(p.detail)parts.push(p.detail);if(['cpu','gpu','ram','storage','motherboard','cooler','case'].includes(p.cat)&&p.score)parts.push(`desempenho ${p.score}`);return parts.join(' · ')||'Peça de computador';}
+function slotMarkup(cat){const p=byId(state.equipped[cat]);const owned=products.filter(x=>x.cat===cat&&(state.owned[x.id]||0)>0).sort((a,b)=>a.price-b.price);const options=owned.map(x=>`<option value="${x.id}" ${x.id===state.equipped[cat]?'selected':''}>${escapeHtml(x.brand+' '+x.model)}</option>`).join('');return `<div class="slot"><div class="slot-head"><span class="slot-name">${catEmojis[cat]} ${labels[cat]}</span><span class="pill ${p?'':'warn'}">${p?'Instalada':'Vazio'}</span></div>${p?`<div class="slot-model">${escapeHtml(p.model)}</div><div class="slot-brand">${escapeHtml(p.brand)}</div><div class="slot-detail">${escapeHtml(productDetails(p))}</div>`:`<div class="slot-model muted">Nenhuma peça instalada</div>`}<select data-equip-slot="${cat}" aria-label="Equipar ${labels[cat]}"><option value="">${cat==='gpu'?'Sem placa de vídeo':'Escolher peça...'}</option>${options}</select></div>`;}
+function renderBuild(){document.getElementById('buildSlots').innerHTML=categoryOrder.map(slotMarkup).join('');document.querySelectorAll('[data-equip-slot]').forEach(sel=>sel.addEventListener('change',()=>{const slot=sel.dataset.equipSlot;const id=sel.value||null;if(id&&!(state.owned[id]>0)){showToast('Você precisa comprar essa peça primeiro.');renderBuild();return;}const wasOperational=getBuild().operational;state.equipped[slot]=id;state.lastAuto=Date.now();renderBuild();updateHUD();renderInventory();save(true);if(!(wasOperational&&!getBuild().operational))showToast(`${labels[slot]} atualizado.`);}));}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderShop(){const cat=document.getElementById('shopCategory').value;const query=document.getElementById('shopSearch').value.trim().toLowerCase();let list=products.filter(p=>(cat==='all'||p.cat===cat)&&(!query||`${p.brand} ${p.model} ${p.cat} ${p.socket||''} ${p.gen||''}`.toLowerCase().includes(query)));list.sort((a,b)=>shopSort==='price'?a.price-b.price:shopSort==='expensive'?b.price-a.price:a.model.localeCompare(b.model));document.getElementById('catalogCount').textContent=`${products.length} peças no catálogo`;
+ const root=document.getElementById('shopList');if(!list.length){root.innerHTML='<div class="no-results" style="grid-column:1/-1">Nenhuma peça encontrada. Tente outra busca.</div>';return;}
+ root.innerHTML=list.map(p=>{const owned=state.owned[p.id]||0;const installed=state.equipped[p.cat]===p.id;return `<article class="product"><div class="product-top"><span class="product-cat">${catEmojis[p.cat]} ${labels[p.cat]}</span><span class="product-price">${p.price?money(p.price):'GRÁTIS'}</span></div><h3>${escapeHtml(p.model)}</h3><div class="product-brand">${escapeHtml(p.brand)} ${installed?'<span class="pill good">Instalada</span>':''}</div><div class="product-specs">${escapeHtml(productDetails(p))}${owned?`<br><strong style="color:var(--text)">No inventário: ${owned}</strong>`:''}</div><div class="product-actions"><button class="btn primary" data-buy="${p.id}" ${canAfford(p)&&!(p.price===0&&owned>0)?'':'disabled'}>${p.price?'Comprar':(owned>0?'Já possui':'Pegar grátis')}</button><button class="btn" data-equip="${p.id}" ${owned?'':'disabled'}>${installed?'Em uso':'Equipar'}</button></div></article>`;}).join('');
+ root.querySelectorAll('[data-buy]').forEach(btn=>btn.addEventListener('click',()=>buy(btn.dataset.buy)));root.querySelectorAll('[data-equip]').forEach(btn=>btn.addEventListener('click',()=>equip(btn.dataset.equip)));
+}
+function buy(id){const p=byId(id);if(!p)return;if(state.cash<p.price){showToast('Créditos insuficientes. Clique mais ou espere a renda do PC.');return;}state.cash-=p.price;state.owned[id]=(state.owned[id]||0)+1;save(true);renderShop();renderInventory();renderBuild();updateHUD();showToast(`${p.model} comprado!`);}
+function equip(id){const p=byId(id);if(!p)return;if(!(state.owned[id]>0)){showToast('Compre a peça antes de equipar.');return;}const wasOperational=getBuild().operational;state.equipped[p.cat]=id;state.lastAuto=Date.now();renderShop();renderBuild();renderInventory();updateHUD();save(true);if(!(wasOperational&&!getBuild().operational))showToast(`${labels[p.cat]} equipado(a).`);}
+function sell(id){const p=byId(id);if(!p)return;if(availableQty(id)<=0){showToast('Não é possível vender uma peça que está instalada.');return;}state.owned[id]--;if(state.owned[id]<=0)delete state.owned[id];const value=Math.floor(p.price*.45);if(value<=0){showToast('Essa peça não tem valor de revenda.');return;}state.cash+=value;state.lifetime+=0;save(true);renderInventory();renderShop();updateHUD();showToast(`Peça vendida por ${money(value)}.`);}
+function renderInventory(){const root=document.getElementById('inventoryList');const entries=products.filter(p=>(state.owned[p.id]||0)>0).sort((a,b)=>a.cat.localeCompare(b.cat)||a.price-b.price);const units=entries.reduce((n,p)=>n+(state.owned[p.id]||0),0);document.getElementById('ownedCount').textContent=`${units} unidades • ${entries.length} modelos`;if(!entries.length){root.innerHTML='<div class="empty" style="grid-column:1/-1">Seu inventário está vazio.</div>';return;}root.innerHTML=entries.map(p=>{const qty=state.owned[p.id]||0;const installed=state.equipped[p.cat]===p.id;const canSell=availableQty(p.id)>0;const value=Math.floor(p.price*.45);return `<article class="inventory-card"><div class="product-top"><span class="product-cat">${catEmojis[p.cat]} ${labels[p.cat]}</span><span class="pill">Qtd. ${qty}</span></div><h3>${escapeHtml(p.model)}</h3><div class="product-brand">${escapeHtml(p.brand)} ${installed?'<span class="pill good">Instalada</span>':''}</div><div class="product-specs">${escapeHtml(productDetails(p))}</div><div class="product-actions"><button class="btn primary" data-invequip="${p.id}">${installed?'Em uso':'Equipar'}</button><button class="btn" data-sell="${p.id}" ${canSell&&value>0?'':'disabled'}>${value>0?`Vender +${money(value)}`:'Sem valor de revenda'}</button></div></article>`;}).join('');root.querySelectorAll('[data-invequip]').forEach(btn=>btn.addEventListener('click',()=>equip(btn.dataset.invequip)));root.querySelectorAll('[data-sell]').forEach(btn=>btn.addEventListener('click',()=>sell(btn.dataset.sell)));}
+function switchTab(tab){state.tab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===`page-${tab}`));if(tab==='shop')renderShop();if(tab==='inventory')renderInventory();if(tab==='garage')renderBuild();}
+function initCategories(){const sel=document.getElementById('shopCategory');categoryOrder.forEach(cat=>{const o=document.createElement('option');o.value=cat;o.textContent=`${catEmojis[cat]} ${labels[cat]}`;sel.appendChild(o);});}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+document.getElementById('clickBtn').addEventListener('click',()=>{const b=getBuild();if(!b.operational){showToast('PC desligado! Use os 1.000 CR de emergência para consertar.');return;}earn(b.click);state.manual++;updateHUD();const btn=document.getElementById('clickBtn');if(btn.animate)btn.animate([{transform:'scale(1)'},{transform:'scale(.975)'},{transform:'scale(1)'}],{duration:120});});
+document.getElementById('shopCategory').addEventListener('change',renderShop);document.getElementById('shopSearch').addEventListener('input',renderShop);document.getElementById('sortBtn').addEventListener('click',()=>{shopSort=shopSort==='price'?'expensive':shopSort==='expensive'?'name':'price';document.getElementById('sortBtn').textContent=`Ordenar: ${shopSort==='price'?'menor preço':shopSort==='expensive'?'maior preço':'nome'}`;renderShop();});
+document.getElementById('saveBtn').addEventListener('click',()=>save(false));document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Apagar o progresso deste jogo e começar do zero?')){state=freshState();save(true);renderBuild();renderShop();renderInventory();updateHUD();switchTab('garage');showToast('Novo jogo iniciado.');}});
+load();initCategories();renderBuild();renderShop();renderInventory();updateHUD();switchTab(state.tab||'garage');
+let autosave=0;setInterval(()=>{const now=Date.now();const dt=Math.min(1,(now-state.lastTick)/1000);state.lastTick=now;const b=getBuild();if(b.operational&&b.passive>0)earn(b.passive*dt);if(b.operational&&b.gpuActive&&now-state.lastAuto>=5000){earn(b.click);state.autoclicks++;state.lastAuto=now;}
+ updateHUD();autosave+=dt;if(autosave>=3){save(true);autosave=0;}},250);
+})();
+</script>
+</body>
+</html>
