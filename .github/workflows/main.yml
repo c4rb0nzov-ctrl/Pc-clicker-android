@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Baixar arquivos
         uses: actions/checkout@v4
@@ -20,26 +21,103 @@ jobs:
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
       - name: Criar projeto Android
         run: |
           mkdir -p app/src/main/assets
           mkdir -p app/src/main/java/com/pcclicker/game
           cp index.html app/src/main/assets/index.html
-          echo 'pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }; dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }; rootProject.name = "PCClicker"; include(":app")' > settings.gradle
-          echo 'plugins { id "com.android.application" version "8.6.1" };' > build.gradle
-          echo 'plugins { id "com.android.application" }; android { namespace "com.pcclicker.game"; compileSdk 35; defaultConfig { applicationId "com.pcclicker.game"; minSdk 23; targetSdk 28; versionCode 1; versionName "1.0" } }' > app/build.gradle
-          echo '<manifest xmlns:android="http://schemas.android.com/apk/res/android"><application android:theme="@android:style/Theme.Material.NoActionBar" android:label="PC Clicker"><activity android:name=".MainActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity></application></manifest>' > app/src/main/AndroidManifest.xml
-          echo 'package com.pcclicker.game; import android.app.*; import android.os.*; import android.webkit.*; public class MainActivity extends Activity { public void onCreate(Bundle b){super.onCreate(b); WebView w=new WebView(this); w.getSettings().setJavaScriptEnabled(true); w.loadUrl("file:///android_asset/index.html"); setContentView(w);} }' > app/src/main/java/com/pcclicker/game/MainActivity.java
+
+          cat > settings.gradle <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = 'PCClicker'
+          include ':app'
+          EOF
+
+          cat > build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application' version '8.6.1' apply false
+          }
+          EOF
+
+          cat > app/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+          android {
+              namespace 'com.pcclicker.game'
+              compileSdk 35
+              defaultConfig {
+                  applicationId 'com.pcclicker.game'
+                  minSdk 23
+                  targetSdk 28
+                  versionCode 1
+                  versionName '1.0'
+              }
+          }
+          EOF
+
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <application
+                  android:theme="@android:style/Theme.Material.NoActionBar"
+                  android:label="PC Clicker">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+
+          cat > app/src/main/java/com/pcclicker/game/MainActivity.java <<'EOF'
+          package com.pcclicker.game;
+
+          import android.app.Activity;
+          import android.os.Bundle;
+          import android.webkit.WebView;
+          import android.webkit.WebSettings;
+
+          public class MainActivity extends Activity {
+              @Override
+              public void onCreate(Bundle b) {
+                  super.onCreate(b);
+                  WebView w = new WebView(this);
+                  WebSettings s = w.getSettings();
+                  s.setJavaScriptEnabled(true);
+                  w.setWebChromeClient(new android.webkit.WebChromeClient());
+                  w.loadUrl("file:///android_asset/index.html");
+                  setContentView(w);
+              }
+          }
+          EOF
 
       - name: Compilar APK
-        run: |
-          gradle wrapper --gradle-version 8.7
-          chmod +x gradlew
-          ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
           name: PC-Clicker-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-          
